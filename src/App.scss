@@ -5,15 +5,18 @@
     position: absolute;
     left: 0;
     width: 100%;
-    animation: move-in-steps 2s;
+    animation: move-in-steps 3s;
   }
 }
 
 @keyframes move-in-steps {
   0% {
-    top: 500px;
+    top: 200px;
+  }
+  50% {
+    top: 0;
   }
   100% {
-    top:0 ;
+    top: 0 ;
   }
 }
