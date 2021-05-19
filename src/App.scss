@@ -1,0 +1,19 @@
+.switchWrapper {
+  position: relative;
+
+  > :first-child ~ * {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    animation: move-in-steps 2s;
+  }
+}
+
+@keyframes move-in-steps {
+  0% {
+    top: 500px;
+  }
+  100% {
+    top:0 ;
+  }
+}
