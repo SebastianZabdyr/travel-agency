@@ -14,7 +14,7 @@ describe('Component TripSummary', () => {
   it('should render correct src and alt', () => {
     const expectedSrc = 'image.jpg';
     const expectedAlt = 'image';
-    const component =shallow(<TripSummary image={expectedSrc} name={expectedAlt} />);
+    const component = shallow(<TripSummary image={expectedSrc} name={expectedAlt} />);
 
     expect(component.find('img').prop('src')).toEqual(expectedSrc);
     expect(component.find('img').prop('alt')).toEqual(expectedAlt);

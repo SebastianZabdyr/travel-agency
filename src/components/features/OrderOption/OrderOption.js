@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import OrderOptionDropdown from './OrderOptionDropdown.js';
 import OrderOptionIcons from './OrderOptionIcons.js';
@@ -8,7 +9,6 @@ import OrderOptionText from './OrderOptionText.js';
 import OrderOptionDate from './OrderOptionDate.js';
 
 import styles from './OrderOption.scss';
-//import {Row, Col} from 'react-flexbox-grid';
 
 const optionTypes = {
   dropdown: OrderOptionDropdown,
@@ -34,6 +34,10 @@ const OrderOption = ({name, id, setOrderOption, type, ...otherProps}) => {
       </div>
     );
   }
+};
+
+OrderOption.propTypes = {
+  name: PropTypes.string,
 };
 
 export default OrderOption;
