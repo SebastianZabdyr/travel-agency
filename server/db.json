@@ -203,6 +203,18 @@
       "start-date": "",
       "totalCost": "$51,381",
       "id": 17
+    },
+    {
+      "car-rental": "",
+      "accommodation": "hotel",
+      "features": [],
+      "adults": 1,
+      "children": 0,
+      "name": "",
+      "contact": "",
+      "start-date": "",
+      "totalCost": "$51,381",
+      "id": 18
     }
   ]
 }
