@@ -3,33 +3,34 @@ import {shallow} from 'enzyme';
 import HappyHourAd from './HappyHourAd';
 
 const select = {
-  title: '.title',
-  description : '.promoDescription',
+  title:'.title',
+  promoDescription:'.countdown',
 };
 
 const mockProps = {
   title : 'Lorem',
-  description : 'abc',
+  description : 'happy hour',
 };
 
-describe('Component HappyHourAd', () => {
+describe('Component HappyHoursAd', () => {
   it('should render without crashing', () => {
     const component = shallow(<HappyHourAd />);
 
     expect(component).toBeTruthy();
+    console.log(component.debug());
   });
 
-  it('should render heading and description', () => {
+  it('should render title and countdown', () =>{
     const component = shallow(<HappyHourAd />);
 
     expect(component.exists(select.title)).toEqual(true);
-    expect(component.exists(select.description)).toEqual(true);
+    expect(component.exists(select.promoDescription)).toEqual(true);
   });
 
-  it('should render correct title', () => {
-    const component = shallow(<HappyHourAd {...mockProps} />);
+  it ('should render correct title', () => {
+    const component = shallow(<HappyHourAd {...mockProps}/>);
 
-    expect(component.find('.title').text()).toEqual(mockProps.title);
+    expect(component.find(select.title).text()).toEqual(mockProps.title);
   });
 });
 
@@ -49,35 +50,14 @@ const mockDate = customDate => class extends Date {
 };
 
 const checkDescriptionAtTime = (time, expectedDescription) => {
-  it(`should show correct value at ${time}`, () => {
+  it(`should show correct at ${time}`, () => {
     global.Date = mockDate(`2019-05-14T${time}.135Z`);
 
     const component = shallow(<HappyHourAd {...mockProps} />);
-    const renderedTime = component.find(select.description).text();
+    const renderedTime = component.find(select.promoDescription).text();
     expect(renderedTime).toEqual(expectedDescription);
 
     global.Date = trueDate;
-  });
-};
-
-const checkDescriptionAfterTime = (time, delaySeconds, expectedDescription) => {
-  it(`should show correct value ${delaySeconds} seconds after ${time}`, () => {
-    jest.useFakeTimers();
-    global.Date = mockDate(`2019-05-14T${time}.135Z`);
-
-    const component = shallow(<HappyHourAd {...mockProps} />);
-
-    const newTime = new Date();
-    newTime.setSeconds(newTime.getSeconds() + delaySeconds);
-    global.Date = mockDate(newTime.getTime());
-
-    jest.advanceTimersByTime(delaySeconds * 1000);
-
-    const renderedTime = component.find(select.description).text();
-    expect(renderedTime).toEqual(expectedDescription);
-
-    global.Date = trueDate;
-    jest.useRealTimers();
   });
 };
 
@@ -86,6 +66,24 @@ describe('Component HappyHourAd with mocked Date', () => {
   checkDescriptionAtTime('11:59:59', '1');
   checkDescriptionAtTime('13:00:00', 23 * 60 * 60 + '');
 });
+
+const checkDescriptionAfterTime = (time, delaySeconds, expectedDescription) => {
+  it(`should show correct value ${delaySeconds} seconds after ${time}`, () => {
+    jest.useFakeTimers();
+    global.Date = mockDate(`2019-05-14T${time}.135Z`);
+
+    const component = shallow(<HappyHourAd {...mockProps} />);
+    const newTime = new Date();
+    newTime.setSeconds(newTime.getSeconds() + delaySeconds);
+    global.Date = mockDate(newTime.getTime());
+    jest.advanceTimersByTime(delaySeconds * 1000);
+    const renderedTime = component.find(select.promoDescription).text();
+    expect(renderedTime).toEqual(expectedDescription);
+
+    global.Date = trueDate;
+    jest.useRealTimers();
+  });
+};
 
 describe('Component HappyHourAd with mocked Date and delay', () => {
   checkDescriptionAfterTime('11:57:58', 2, '120');
@@ -96,7 +94,6 @@ describe('Component HappyHourAd with mocked Date and delay', () => {
 describe('Component HappyHourAd with promoDescription at happy hour', () => {
   checkDescriptionAtTime('12:00:00', mockProps.description);
   checkDescriptionAtTime('12:59:59', mockProps.description);
-  checkDescriptionAtTime('12:30:25', mockProps.description);
 });
 
 describe('Component HappyHourAd with mockedDate or promoDescription', () => {
